@@ -4,6 +4,7 @@
 /usr/sbin/sshd
 
 # In
+$SPARK_HOME/sbin/start-slave.sh spark://master:7077
 
 # Loop
 CMD=${1:-"exit 0"}
