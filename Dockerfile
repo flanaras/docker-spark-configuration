@@ -5,7 +5,8 @@ USER root
 
 # Custom
 ##
-
+RUN hdfs dfs -mkdir /shared && \
+        hdfs dfs -mkdir /shared/events
 ##
 
 COPY bootstrap.sh /etc/bootstrap.sh
