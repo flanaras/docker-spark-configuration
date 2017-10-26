@@ -1,19 +1,32 @@
 #! /bin/bash
 
-original="$(git rev-parse --abbrev-ref HEAD)"
-
+get_branch="git rev-parse --abbrev-ref HEAD"
 git_cmd='git checkout $branch'
 docker_cmd='docker build -t $branch .'
 
+function check {
+	eval $git_cmd > /dev/null 2>&1
+	if [ ! "$($get_branch)" == "$branch" ]; then
+		echo "[Error]" Did not change branch to $branch!
+		exit 1
+	fi
+}
+
+function change_branch {
+	check
+	eval $docker_cmd
+}
+
+
+
+original="$($get_branch)"
 
 branch=spark-master
-eval $docker_cmd
-eval $git_cmd
-
+change_branch
 
 branch=spark-worker
-eval $docker_cmd
-eval $git_cmd
+change_branch
 
 branch=$original
 eval $git_cmd
+
