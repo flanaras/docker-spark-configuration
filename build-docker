@@ -2,13 +2,18 @@
 
 original="$(git rev-parse --abbrev-ref HEAD)"
 
+git_cmd='git checkout $branch'
+docker_cmd='docker build -t $branch .'
+
 
 branch=spark-master
-git checkout $branch 
-docker build -t $branch .
+eval $docker_cmd
+eval $git_cmd
+
 
 branch=spark-worker
-git checkout $branch 
-docker build -t $branch .
+eval $docker_cmd
+eval $git_cmd
 
-git checkout $original
+branch=$original
+eval $git_cmd
