@@ -2,7 +2,7 @@
 
 get_branch="git rev-parse --abbrev-ref HEAD"
 git_cmd='git checkout $branch'
-docker_cmd='docker build -t $branch .'
+docker_cmd='docker build --no-cache -t $branch .'
 
 function check {
 	eval $git_cmd > /dev/null 2>&1
