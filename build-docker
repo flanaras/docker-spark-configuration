@@ -1,0 +1,14 @@
+#! /bin/bash
+
+original="$(git rev-parse --abbrev-ref HEAD)"
+
+
+branch=spark-master
+git checkout $branch 
+docker build -t $branch .
+
+branch=spark-worker
+git checkout $branch 
+docker build -t $branch .
+
+git checkout $original
