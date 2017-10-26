@@ -1,0 +1,36 @@
+#! /bin/bash
+
+net_name=isolated_nw
+
+# Set up the network if it doesn't exist
+if [ -z "$(docker network ls | grep " $net_name " )" ]; then
+	echo Creating network.
+	docker network create --driver bridge $net_name
+fi
+
+# Build the images
+./build-docker
+
+common="-it -d"
+
+# Generate the docker command to run
+docker_cmd='docker run $common -h $name $ports --network-alias=$name --network=$net_name $volume $image /bin/bash'
+
+# Configure master
+name=master
+ports="-p 8080:8080 -p 18080:18080"
+volume=
+image=spark-master
+
+## Invoke master
+eval $docker_cmd
+
+
+# Configure clone/worker
+name=clone
+ports="-p 4040:4040"
+volume="-v /home/$USER/docker-mount:/host"
+image=spark-worker
+
+## Invoke worker
+eval $docker_cmd
