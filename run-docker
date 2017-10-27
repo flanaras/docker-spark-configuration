@@ -19,7 +19,7 @@ docker_cmd='docker run $common -h $name $ports --network-alias=$name --network=$
 # Configure master
 name=master
 ports="-p 8080:8080 -p 18080:18080"
-volume=
+volume="-v /home/$USER/docker-mount:/host"
 image=spark-master
 
 ## Invoke master
