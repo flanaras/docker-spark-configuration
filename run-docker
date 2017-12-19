@@ -8,9 +8,6 @@ if [ -z "$(docker network ls | grep " $net_name " )" ]; then
 	docker network create --driver bridge $net_name
 fi
 
-# Build the images
-./build-docker
-
 common="-it -d"
 
 # Generate the docker command to run
